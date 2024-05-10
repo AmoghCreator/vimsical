@@ -1,1 +1,2 @@
-const app = [1,2]
+const app: number[] = [1,2]
+

@@ -16,7 +16,7 @@ Plug('hrsh7th/cmp-vsnip')
 Plug('hrsh7th/vim-vsnip')
 Plug('pappasam/papercolor-theme-slim')
 Plug('nvim-tree/nvim-tree.lua')
-
+Plug("folke/trouble.nvim")
 
 
 vim.call('plug#end')
