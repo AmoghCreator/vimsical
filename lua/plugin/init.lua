@@ -1,5 +1,5 @@
-local vim = vim
-local Plug = vim.fn['plug#']
+local vim = vim;
+local Plug = vim.fn['plug#'];
 
 vim.call('plug#begin')
 
@@ -11,12 +11,27 @@ Plug('hrsh7th/cmp-buffer')
 Plug('hrsh7th/cmp-path')
 Plug('hrsh7th/cmp-cmdline')
 Plug('hrsh7th/nvim-cmp')
-
 Plug('hrsh7th/cmp-vsnip')
 Plug('hrsh7th/vim-vsnip')
+
 Plug('pappasam/papercolor-theme-slim')
+
 Plug('nvim-tree/nvim-tree.lua')
+
 Plug("folke/trouble.nvim")
 
+Plug("jiangmiao/auto-pairs")
 
+Plug('prettier/vim-prettier', {['do']= 'yarn install' , ['branch']= 'release/0.x' })
+
+Plug("utilyre/barbecue.nvim")
+
+Plug("SmiteshP/nvim-navic")
+
+Plug('nvim-tree/nvim-web-devicons')
+Plug('akinsho/bufferline.nvim', { ['tag']= '*' })
+
+Plug('RRethy/vim-illuminate')
+Plug("lukas-reineke/indent-blankline.nvim")
+Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
 vim.call('plug#end')
