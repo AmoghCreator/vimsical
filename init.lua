@@ -505,7 +505,7 @@ local function change_buffer_pos()
 	then                           
 		num = 0
 	end
-	print(num)
+	--print(num)
 	vim.cmd(':BufferLineGoToBuffer '..num)
 end
 local function change_buffer_neg()
