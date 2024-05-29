@@ -16,7 +16,14 @@ Plug('hrsh7th/vim-vsnip')
 
 Plug('pappasam/papercolor-theme-slim')
 
-Plug('nvim-tree/nvim-tree.lua')
+-- Plug('nvim-tree/nvim-tree.lua')
+
+-- Plug("nvim-neo-tree/neo-tree.nvim")
+
+-- Plug('preservim/nerdtree')
+
+Plug('simonmclean/triptych.nvim')
+Plug('nvim-lua/plenary.nvim')
 
 Plug("folke/trouble.nvim")
 
@@ -34,4 +41,5 @@ Plug('akinsho/bufferline.nvim', { ['tag']= '*' })
 Plug('RRethy/vim-illuminate')
 Plug("lukas-reineke/indent-blankline.nvim")
 Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
+
 vim.call('plug#end')

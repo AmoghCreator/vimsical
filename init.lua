@@ -118,10 +118,10 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+-- require("nvim-tree").setup()
 
 -- OR setup with some options
-require("nvim-tree").setup({
+--[[require("nvim-tree").setup({
   sort = {
     sorter = "case_sensitive",
   },
@@ -135,7 +135,7 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
-
+--]]
 
 
 
@@ -204,7 +204,12 @@ require('illuminate').configure({
     case_insensitive_regex = false,
 })
 
-
+-- Triptych
+require('triptych').setup{
+	options = {
+    show_hidden = true,
+	} 
+}
 
 
 
@@ -245,8 +250,9 @@ local function change_buffer_neg()
 	--print(num)
 	vim.cmd(':BufferLineGoToBuffer '..num)
 end
-vim.keymap.set("n","<space>e",":NvimTreeToggle<CR>", {noremap=true, silent=true})
+--vim.keymap.set("n","<space>e",":NERDTreeToggle<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>h",":TroubleToggle<CR>", {silent=true})
+vim.keymap.set("n","<space>e",":Triptych<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>p",":Prettier<CR>", {silent=true})
 -- Bufferline Config
 vim.keymap.set("n","<S-l>", change_buffer_pos, {silent=true})
@@ -390,10 +396,10 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+--require("nvim-tree").setup()
 
 -- OR setup with some options
-require("nvim-tree").setup({
+--[[require("nvim-tree").setup({
   sort = {
     sorter = "case_sensitive",
   },
@@ -407,6 +413,7 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+--]]
 
 
 
@@ -488,14 +495,14 @@ require('illuminate').configure({
 vim.cmd('colorscheme PaperColorSlim')
 vim.cmd('set relativenumber')
 
-local buffers = vim.api.nvim_list_bufs()
-local num_file_buffers = 0
+	local buffers = vim.api.nvim_list_bufs()
+	local num_file_buffers = 0
 
-for _, buf in ipairs(buffers) do
+	for _, buf in ipairs(buffers) do
     if vim.api.nvim_buf_get_option(buf, "buftype") == "" then
         num_file_buffers = num_file_buffers + 1
     end
-end
+	end
 
 num = 0 
 local function change_buffer_pos()
@@ -517,7 +524,8 @@ local function change_buffer_neg()
 	--print(num)
 	vim.cmd(':BufferLineGoToBuffer '..num)
 end
-vim.keymap.set("n","<space>e",":NvimTreeToggle<CR>", {noremap=true, silent=true})
+
+vim.keymap.set("n","<space>e",":Triptych<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>h",":TroubleToggle<CR>", {silent=true})
 vim.keymap.set("n","<space>p",":Prettier<CR>", {silent=true})
 -- Bufferline Config
