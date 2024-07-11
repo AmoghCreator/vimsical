@@ -3,7 +3,10 @@ local Plug = vim.fn['plug#'];
 
 vim.call('plug#begin')
 
-
+--Mason
+Plug('williamboman/mason.nvim')
+Plug('williamboman/mason-lspconfig.nvim')
+Plug('neovim/nvim-lspconfig')
 
 
 Plug('hrsh7th/cmp-nvim-lsp')
@@ -28,6 +31,7 @@ Plug('nvim-lua/plenary.nvim')
 Plug("folke/trouble.nvim")
 
 Plug("jiangmiao/auto-pairs")
+Plug('alvan/vim-closetag')
 
 Plug('prettier/vim-prettier', {['do']= 'yarn install' , ['branch']= 'release/0.x' })
 

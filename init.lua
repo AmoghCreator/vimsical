@@ -1,10 +1,11 @@
--- vim-plug
+-- vim-plug 
 require("plugin")
 
 -- WinBar ( i.e. the scope thingy yo see on top )
 require("nvim-navic")
 require("barbecue").setup()
 
+--[[
 -- lspconfig
 require('lspconfig').pyright.setup{}
 
@@ -24,6 +25,50 @@ require('lspconfig').tsserver.setup{
     "vue",
   },
 }
+
+require('lspconfig').emmet_ls.setup({
+    -- on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue", "tsx" },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
+})
+
+--]]
+
+-- Mason
+require("mason").setup()
+require("mason-lspconfig").setup()
+
+require('lspconfig').pyright.setup{}
+
+require('lspconfig').tailwindcss.setup{}
+
+require('lspconfig').tsserver.setup{
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+        languages = {"javascript", "typescript", "vue", "typescriptreact"},
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+		"typescriptreact"
+  },
+}
+
+require('lspconfig').rust_analyzer.setup{}
 
 -- indent blan line
 require("ibl").setup()
@@ -66,14 +111,14 @@ require("ibl").setup()
 
   -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
   -- Set configuration for specific filetype.
-  --[[ cmp.setup.filetype('gitcommit', {
+  cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
       { name = 'git' },
     }, {
       { name = 'buffer' },
     })
  })
- require("cmp_git").setup() ]]-- 
+ -- require("cmp_git").setup()  
 
   -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline({ '/', '?' }, {
@@ -93,7 +138,7 @@ require("ibl").setup()
     }),
     matching = { disallow_symbol_nonprefix_matching = false }
   })
-
+--[[
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
@@ -103,8 +148,10 @@ require("ibl").setup()
   require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
   }
-
-
+--]]
+require('mason-lspconfig').setup {
+    capabilities = capabilities
+}
 
 
 
@@ -221,42 +268,13 @@ require('triptych').setup{
 vim.cmd('colorscheme PaperColorSlim')
 vim.cmd('set relativenumber')
 
-local buffers = vim.api.nvim_list_bufs()
-local num_file_buffers = 0
-
-for _, buf in ipairs(buffers) do
-    if vim.api.nvim_buf_get_option(buf, "buftype") == "" then
-        num_file_buffers = num_file_buffers + 1
-    end
-end
-
-num = 0 
-local function change_buffer_pos()
-	num = num + 1
-	--print(num.." "..num_file_buffers)
-	if(num > num_file_buffers-1) -- -1 because even though num is not supposed to exceed the buffersize, it still did.
-	then                           
-		num = 0
-	end
-	print(num)
-	vim.cmd(':BufferLineGoToBuffer '..num)
-end
-local function change_buffer_neg()
-	num = num - 1
-	if(num < 0)
-	then
-		num = num_file_buffers-1
-	end
-	--print(num)
-	vim.cmd(':BufferLineGoToBuffer '..num)
-end
 --vim.keymap.set("n","<space>e",":NERDTreeToggle<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>h",":TroubleToggle<CR>", {silent=true})
 vim.keymap.set("n","<space>e",":Triptych<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>p",":Prettier<CR>", {silent=true})
 -- Bufferline Config
-vim.keymap.set("n","<S-l>", change_buffer_pos, {silent=true})
-vim.keymap.set("n","<S-h>", change_buffer_neg, {silent=true})
+vim.keymap.set("n","<S-l>", ":BufferLineCycleNext<CR>", {silent=true})
+vim.keymap.set("n","<S-h>", ":BufferLineCyclePrev<CR>", {silent=true})
 vim.keymap.set("n","<C-l>", ":BufferLineMoveNext<CR>", {silent=true})
 vim.keymap.set("n","<C-h>", ":BufferLineMovePrev<CR>", {silent=true})
 vim.keymap.set("v","y",'"+y', {silent=true})
@@ -372,6 +390,7 @@ require('lspconfig').tsserver.setup{
     matching = { disallow_symbol_nonprefix_matching = false }
   })
 
+	--[[
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
@@ -381,7 +400,10 @@ require('lspconfig').tsserver.setup{
   require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
   }
-
+	require('lspconfig')['vscode-html-languageservice'].setup {
+		capabilities = capabilities
+	}
+--]]
 
 
 
@@ -483,8 +505,48 @@ require('illuminate').configure({
     case_insensitive_regex = false,
 })
 
+-- treesitter
 
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "html", "tsx", "typescript" },
 
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (or "all")
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    disable = function(lang, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 
 
@@ -495,42 +557,12 @@ require('illuminate').configure({
 vim.cmd('colorscheme PaperColorSlim')
 vim.cmd('set relativenumber')
 
-	local buffers = vim.api.nvim_list_bufs()
-	local num_file_buffers = 0
-
-	for _, buf in ipairs(buffers) do
-    if vim.api.nvim_buf_get_option(buf, "buftype") == "" then
-        num_file_buffers = num_file_buffers + 1
-    end
-	end
-
-num = 0 
-local function change_buffer_pos()
-	num = num + 1
-	--print(num.." "..num_file_buffers)
-	if(num > num_file_buffers-1) -- -1 because even though num is not supposed to exceed the buffersize, it still did.
-	then                           
-		num = 0
-	end
-	--print(num)
-	vim.cmd(':BufferLineGoToBuffer '..num)
-end
-local function change_buffer_neg()
-	num = num - 1
-	if(num < 0)
-	then
-		num = num_file_buffers-1
-	end
-	--print(num)
-	vim.cmd(':BufferLineGoToBuffer '..num)
-end
-
 vim.keymap.set("n","<space>e",":Triptych<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>h",":TroubleToggle<CR>", {silent=true})
 vim.keymap.set("n","<space>p",":Prettier<CR>", {silent=true})
 -- Bufferline Config
-vim.keymap.set("n","<S-l>", change_buffer_pos, {silent=true})
-vim.keymap.set("n","<S-h>", change_buffer_neg, {silent=true})
+vim.keymap.set("n","<S-l>", ':BufferLineCycleNext<CR>', {silent=true})
+vim.keymap.set("n","<S-h>", ':BufferLineCyclePrev<CR>', {silent=true})
 vim.keymap.set("n","<C-l>", ":BufferLineMoveNext<CR>", {silent=true})
 vim.keymap.set("n","<C-h>", ":BufferLineMovePrev<CR>", {silent=true})
 vim.keymap.set("v","y",'"+y', {silent=true})
