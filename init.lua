@@ -267,6 +267,7 @@ require('triptych').setup{
 -- my configs
 vim.cmd('colorscheme PaperColorSlim')
 vim.cmd('set relativenumber')
+vim.cmd('set nu rnu')
 
 --vim.keymap.set("n","<space>e",":NERDTreeToggle<CR>", {noremap=true, silent=true})
 vim.keymap.set("n","<space>h",":TroubleToggle<CR>", {silent=true})

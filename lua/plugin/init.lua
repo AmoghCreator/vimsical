@@ -46,4 +46,8 @@ Plug('RRethy/vim-illuminate')
 Plug("lukas-reineke/indent-blankline.nvim")
 Plug('nvim-treesitter/nvim-treesitter', {['do']= ':TSUpdate'})
 
+Plug('mbbill/undotree')
+
+Plug('folke/persistence.nvim')
+
 vim.call('plug#end')
