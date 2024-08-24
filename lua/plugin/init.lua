@@ -50,4 +50,8 @@ Plug('mbbill/undotree')
 
 Plug('folke/persistence.nvim')
 
+Plug('nvim-tree/nvim-web-devicons')
+
+Plug('ibhagwan/fzf-lua')
+
 vim.call('plug#end')
